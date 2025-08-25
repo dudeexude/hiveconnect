@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HiveConnect - Login</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Segoe UI", Arial, sans-serif;
+    }
+
+    body {
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #000; /* black theme */
+      overflow: hidden;
+      color: #fff;
+    }
+
+    canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      background: linear-gradient(135deg, #000, #1a1a1a); /* black shades */
+    }
+
+    .login-box {
+      position: relative;
+      z-index: 2;
+      background: rgba(0, 0, 0, 0.7);
+      padding: 40px 30px;
+      border-radius: 15px;
+      width: 360px;
+      text-align: center;
+      box-shadow: 0 0 25px rgba(255, 213, 0, 0.8), 0 0 50px rgba(255, 213, 0, 0.5);
+      backdrop-filter: blur(12px);
+      animation: glow 2s infinite alternate;
+    }
+
+    @keyframes glow {
+      from { box-shadow: 0 0 20px rgba(255,213,0,0.6), 0 0 40px rgba(255,213,0,0.3); }
+      to   { box-shadow: 0 0 35px rgba(255,213,0,1), 0 0 70px rgba(255,213,0,0.6); }
+    }
+
+    .logo {
+      background: #ffd500;
+      width: 90px;
+      height: 90px;
+      margin: 0 auto 20px;
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 25px #ffd500;
+      overflow: hidden;
+      animation: pulse 2s infinite alternate;
+    }
+
+    .logo img {
+      width: 85%;
+      height: 85%;
+      object-fit: contain;
+    }
+
+    @keyframes pulse {
+      from { box-shadow: 0 0 15px #ffd500; }
+      to { box-shadow: 0 0 35px #ffd500; }
+    }
+
+    .login-box h1 {
+      font-size: 22px;
+      font-weight: 700;
+      color: #ffd500;
+    }
+
+    .login-box p {
+      font-size: 12px;
+      color: #ccc;
+      margin-bottom: 20px;
+    }
+
+    .input-box {
+      position: relative;
+      margin-bottom: 15px;
+    }
+
+    .input-box input {
+      width: 100%;
+      padding: 12px 40px 12px 15px;
+      border: none;
+      border-radius: 10px;
+      background: rgba(255,255,255,0.1);
+      color: #fff;
+      outline: none;
+      font-size: 14px;
+    }
+
+    .input-box input::placeholder {
+      color: #bbb;
+    }
+
+    .input-box .icon {
+      position: absolute;
+      right: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 16px;
+      color: #ffd500;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .options {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 12px;
+      margin: 10px 0 20px;
+    }
+
+    .options label {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .options a {
+      color: #ffd500;
+      text-decoration: none;
+    }
+
+    .btn {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 10px;
+      background: #ffd500;
+      font-size: 15px;
+      font-weight: 600;
+      color: #111;
+      cursor: pointer;
+      box-shadow: 0 0 15px #ffd500;
+      transition: 0.3s;
+    }
+
+    .btn:hover {
+      background: #ffe033;
+    }
+
+    .divider {
+      margin: 20px 0;
+      display: flex;
+      align-items: center;
+      text-align: center;
+      color: #888;
+      font-size: 12px;
+    }
+
+    .divider::before, .divider::after {
+      content: "";
+      flex: 1;
+      border-bottom: 1px solid #333;
+    }
+
+    .divider:not(:empty)::before {
+      margin-right: .75em;
+    }
+
+    .divider:not(:empty)::after {
+      margin-left: .75em;
+    }
+
+    .social-login {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .social-btn {
+      width: 48%;
+      padding: 10px;
+      border: none;
+      border-radius: 10px;
+      font-size: 14px;
+      cursor: pointer;
+      background: #111;
+      color: #ffd500;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: 0.3s;
+    }
+
+    .social-btn img {
+      height: 20px;
+    }
+
+    .social-btn:hover {
+      background: #222;
+    }
+
+    .signup {
+      margin-top: 15px;
+      font-size: 12px;
+    }
+
+    .signup a {
+      color: #ffd500;
+      text-decoration: none;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="bg"></canvas>
+
+  <div class="login-box">
+    <div class="logo">
+      <img src="https://static.vecteezy.com/system/resources/previews/005/733/094/original/modern-shape-honey-bee-logo-design-graphic-symbol-icon-illustration-creative-idea-vector.jpg" alt="BondHub Logo">
+    </div>
+    <h1>HiveConnect</h1>
+    <p>YOUR NETWORK, YOUR GROWTH</p>
+
+    <div class="input-box">
+      <input type="email" placeholder="Enter your email address">
+      <span class="icon">@</span>
+    </div>
+
+    <div class="input-box">
+      <input type="password" id="password" placeholder="Enter your password">
+      <span class="icon" id="togglePassword">👁</span>
+    </div>
+
+    <div class="options">
+      <label><input type="checkbox"> Remember me</label>
+      <a href="#">Forgot Password?</a>
+    </div>
+
+    <button class="btn">Sign In to HiveConnect</button>
+
+    <div class="divider">or continue with</div>
+
+    <div class="social-login">
+      <button class="social-btn">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg" alt="Google Logo">
+      </button>
+      <button class="social-btn">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/8/81/LinkedIn_icon.svg" alt="LinkedIn Logo">
+        LinkedIn
+      </button>
+    </div>
+
+    <div class="signup">
+      Don’t have an account? <a href="create.html">Create one now</a>
+    </div>
+  </div>
+
+  <script>
+    const canvas = document.getElementById("bg");
+    const ctx = canvas.getContext("2d");
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    let particles = [];
+
+    class Particle {
+      constructor() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.radius = Math.random() * 2 + 1;
+        this.dx = (Math.random() - 0.5) * 1.2;
+        this.dy = (Math.random() - 0.5) * 1.2;
+        this.color = "rgba(255, 213, 0, 0.8)"; /* yellow particles */
+      }
+      draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        ctx.fillStyle = this.color;
+        ctx.fill();
+      }
+      update() {
+        this.x += this.dx;
+        this.y += this.dy;
+        if (this.x < 0 || this.x > canvas.width) this.dx *= -1;
+        if (this.y < 0 || this.y > canvas.height) this.dy *= -1;
+        this.draw();
+      }
+    }
+
+    function connectParticles() {
+      for (let a = 0; a < particles.length; a++) {
+        for (let b = a; b < particles.length; b++) {
+          let dx = particles[a].x - particles[b].x;
+          let dy = particles[a].y - particles[b].y;
+          let dist = Math.sqrt(dx*dx + dy*dy);
+          if (dist < 120) {
+            ctx.strokeStyle = "rgba(255,213,0,0.15)"; /* yellow glow */
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(particles[a].x, particles[a].y);
+            ctx.lineTo(particles[b].x, particles[b].y);
+            ctx.stroke();
+          }
+        }
+      }
+    }
+
+    function init() {
+      particles = [];
+      for (let i = 0; i < 80; i++) {
+        particles.push(new Particle());
+      }
+    }
+
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      particles.forEach(p => p.update());
+      connectParticles();
+      requestAnimationFrame(animate);
+    }
+
+    window.addEventListener("resize", () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      init();
+    });
+
+    init();
+    animate();
+
+    // 🔹 Password toggle
+    const togglePassword = document.getElementById("togglePassword");
+    const passwordInput = document.getElementById("password");
+
+    togglePassword.addEventListener("click", () => {
+      const type = passwordInput.getAttribute("type") === "password" ? "text" : "password";
+      passwordInput.setAttribute("type", type);
+
+      // Change icon text
+      togglePassword.textContent = type === "password" ? "👁" : "👁";
+    });
+  </script>
+</body>
+</html>
